@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: contacts-app
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_q9pNabOvBIt4@ep-odd-union-a5v14igw-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require
+
+databases:
+  - name: contacts-db
+    databaseName: contacts
+    plan: free 
