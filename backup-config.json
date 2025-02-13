@@ -1,0 +1,7 @@
+{
+  "backupSchedule": {
+    "frequency": "daily",
+    "time": "22:00",
+    "cronExpression": "00 22 * * *"
+  }
+}

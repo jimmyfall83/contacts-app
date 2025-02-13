@@ -1,0 +1,1559 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    display: flex;
+    flex-direction: column;  /* Stack children vertically */
+    gap: 1rem;  /* Space between rows */
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.add-contact-btn {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.sign-out-btn {
+    background: transparent;
+    color: #666;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.contact-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.profile-image {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.contact-details h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.contact-title {
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.contact-email {
+    color: #666;
+}
+
+.delete-btn {
+    background: transparent;
+    color: #dc3545;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.delete-btn:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 80%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.image-upload {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 300px;
+}
+
+#imagePreview {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: #ddd;
+    margin: 10px 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#imagePreview:empty::after {
+    content: 'No image';
+    color: #666;
+}
+
+#imagePreview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-upload input[type="file"] {
+    width: auto;
+    min-width: 300px;
+    padding: 0.5rem 0;
+}
+
+.contact-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.contact-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-btn {
+    background: #4CAF50;
+}
+
+.edit-btn:hover {
+    background: #45a049;
+}
+
+.add-new-btn {
+    background: #4CAF50;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1em;
+}
+
+.add-new-btn:hover {
+    background: #45a049;
+}
+
+.cancel-btn {
+    background: #666;
+}
+
+.cancel-btn:hover {
+    background: #555;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.contact-card {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.contact-card:hover {
+    background: #f8f8f8;
+}
+
+.contact-summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.form-grid {
+    display: grid;
+    /* First column for image (300px), remaining space split between name fields */
+    grid-template-columns: 300px minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Keep salutation narrow */
+.form-group:has(#salutation) {
+    max-width: 120px;
+}
+
+/* Make the name fields container span the remaining width */
+.name-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr;
+    gap: 1rem;
+    grid-column: 1 / -1; /* Span all columns */
+}
+
+/* Remove the old name-row styles */
+.name-row .form-group:not(:first-child) {
+    width: 100%;
+}
+
+/* Make other fields span full width */
+.form-grid > .form-group:not(.name-row) {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-select {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.1);
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.save-btn {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.save-btn:hover {
+    background: #0b5ed7;
+}
+
+.video-upload video,
+.youtube-container {
+    max-width: 100%;
+    width: 600px; /* Set a fixed width for both */
+    margin: 1rem 0;
+    border-radius: 8px;
+}
+
+.video-upload video {
+    display: block;
+}
+
+.youtube-container {
+    position: relative;
+    height: 338px;
+    width: 600px;
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000; /* Add black background */
+}
+
+.youtube-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+.youtube-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.youtube-open-btn {
+    background: rgba(255, 0, 0, 0.9);
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.1);
+}
+
+/* If the above doesn't work in all browsers, use this alternative: */
+#salutation {
+    width: auto;
+    min-width: 120px;
+}
+
+/* Add these styles for YouTube container and URL input */
+.youtube-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 600px;  /* Match video width */
+    margin-bottom: 2rem;  /* Add space before buttons */
+}
+
+/* Move URL input below video */
+#youtubeUrl {
+    order: 2;  /* Push URL input below video */
+    width: 100%;
+}
+
+#youtubePreview {
+    order: 1;  /* Keep video preview on top */
+}
+
+/* Add styles for video upload layout */
+.video-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 600px;
+    margin-top: 0; /* Remove top margin to keep label close */
+}
+
+.video-preview {
+    order: 1;
+    width: 100%;
+}
+
+#video {
+    order: 2;
+    width: 100%;
+}
+
+/* Update existing video styles */
+.video-upload video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    margin: 0;  /* Remove margin since container handles spacing */
+}
+
+/* Update video section spacing and title */
+.form-group.full-width {
+    margin-top: 1rem; /* Match spacing of other fields */
+}
+
+/* Style both video sections consistently */
+.form-group.full-width:has(.video-wrapper) label,
+.form-group.full-width:has(.youtube-wrapper) label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+/* Consistent spacing for both sections */
+.form-group.full-width:has(.video-wrapper),
+.form-group.full-width:has(.youtube-wrapper) {
+    margin-top: 1rem;
+}
+
+/* Keep the wrapper margins consistent */
+.video-wrapper,
+.youtube-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 600px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Remove any duplicate or conflicting styles */
+.form-group.full-width:has(.video-wrapper) {
+    margin-top: 1rem;
+}
+
+.form-group.full-width:has(.video-wrapper) label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+/* Base styles for video sections */
+.video-wrapper,
+.youtube-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 600px;
+}
+
+/* Video container styles */
+.youtube-container {
+    position: relative;
+    height: 338px;
+    width: 600px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+    margin: 0;
+}
+
+/* Label styling for both sections */
+.form-group.full-width:has(.video-wrapper) label,
+.form-group.full-width:has(.youtube-wrapper) label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+/* Spacing for video sections */
+.form-group.full-width:has(.video-wrapper),
+.form-group.full-width:has(.youtube-wrapper) {
+    margin-top: 1rem;
+}
+
+/* File inputs and URL input */
+#video,
+#youtubeUrl {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+/* Video preview */
+.video-preview video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+/* Attachments section styling */
+.attachments-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 600px;
+}
+
+#attachmentsPreview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.attachment-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* File type icon colors */
+.attachment-item .material-icons {
+    /* Default color (for unknown types) */
+    color: #666;
+}
+
+/* Documents */
+.attachment-item .material-icons[data-type="pdf"] {
+    color: #FF5722;  /* Adobe-like red */
+}
+
+.attachment-item .material-icons[data-type="doc"],
+.attachment-item .material-icons[data-type="docx"] {
+    color: #2196F3;  /* Microsoft Word blue */
+}
+
+/* Spreadsheets */
+.attachment-item .material-icons[data-type="xls"],
+.attachment-item .material-icons[data-type="xlsx"] {
+    color: #4CAF50;  /* Microsoft Excel green */
+}
+
+/* Presentations */
+.attachment-item .material-icons[data-type="ppt"],
+.attachment-item .material-icons[data-type="pptx"] {
+    color: #FF5722;  /* Microsoft PowerPoint orange/red */
+}
+
+/* Text files */
+.attachment-item .material-icons[data-type="txt"],
+.attachment-item .material-icons[data-type="rtf"] {
+    color: #607D8B;  /* Blue grey */
+}
+
+/* Images */
+.attachment-item .material-icons[data-type="image"] {
+    color: #9C27B0;  /* Purple */
+}
+
+/* Archives */
+.attachment-item .material-icons[data-type="zip"],
+.attachment-item .material-icons[data-type="rar"],
+.attachment-item .material-icons[data-type="7z"] {
+    color: #FFC107;  /* Amber */
+}
+
+.attachment-name {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    color: #0d6efd;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.attachment-name:hover {
+    text-decoration: underline;
+    color: #0a58ca;
+}
+
+.attachment-size {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.remove-attachment {
+    color: #dc3545;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+}
+
+.remove-attachment:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.export-btn,
+.import-btn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.export-btn:hover,
+.import-btn:hover {
+    background: #5a6268;
+}
+
+/* Hidden file input for import */
+#importInput {
+    display: none;
+}
+
+.utility-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 0.5rem;  /* Additional space between button rows */
+}
+
+.utility-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.utility-buttons button:hover {
+    background-color: #e0e0e0;
+}
+
+.utility-buttons .material-icons {
+    font-size: 18px;
+}
+
+/* Unsaved changes dialog styles */
+.discard-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.discard-btn:hover {
+    background: #c82333;
+}
+
+.keep-editing-btn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.keep-editing-btn:hover {
+    background: #5a6268;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+    /* Container padding */
+    .container {
+        padding: 1rem;
+    }
+
+    /* Adjust header size */
+    h1 {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        text-align: center;
+    }
+
+    /* Header buttons */
+    .header-buttons, .utility-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .header-buttons button, .utility-buttons button {
+        flex: 1 1 40%;  /* More flexible sizing */
+        min-width: 140px;
+        max-width: 200px;
+        font-size: clamp(0.8rem, 3vw, 1rem);
+        padding: 0.5em 0.8em;
+    }
+
+    .material-icons {
+        font-size: clamp(16px, 4vw, 24px);
+    }
+
+    /* Contact cards */
+    .contact-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: clamp(0.8rem, 3vw, 1.5rem);
+    }
+
+    .profile-image {
+        width: clamp(48px, 15vw, 64px);
+        height: clamp(48px, 15vw, 64px);
+    }
+
+    .contact-details h2 {
+        font-size: clamp(1rem, 4vw, 1.25rem);
+    }
+
+    .contact-info {
+        width: 100%;
+        gap: clamp(0.8rem, 3vw, 1.5rem);
+    }
+
+    /* Modal content */
+    .modal {
+        padding-top: 1rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: clamp(0.8rem, 3vw, 2rem);
+        margin: 0.5rem;
+        max-height: 90vh;
+    }
+
+    /* Form elements */
+    .form-group input,
+    .form-group textarea,
+    .form-select {
+        padding: clamp(0.5rem, 2vw, 0.75rem);
+        font-size: clamp(0.9rem, 3vw, 1rem);
+    }
+
+    /* Image upload */
+    .image-upload {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #imagePreview {
+        width: 200px;
+        height: 200px;
+        margin: 1rem 0;
+    }
+
+    /* Video and YouTube sections */
+    .video-wrapper,
+    .youtube-wrapper,
+    .attachments-wrapper {
+        max-width: 100%;
+    }
+
+    .youtube-container {
+        width: 100%;
+        height: min(200px, 56.25vw); /* 16:9 aspect ratio */
+    }
+
+    /* Attachment items */
+    .attachment-item {
+        padding: clamp(0.3rem, 2vw, 0.5rem);
+        gap: clamp(0.5rem, 2vw, 1rem);
+    }
+
+    .attachment-name {
+        font-size: clamp(0.8rem, 3vw, 0.9rem);
+    }
+
+    /* Form buttons */
+    .form-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: clamp(1rem, 4vw, 2rem);
+    }
+
+    .form-buttons button {
+        width: 100%;
+        padding: clamp(0.5rem, 2vw, 0.75rem);
+    }
+
+    /* Image upload adjustments */
+    .image-upload {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #imagePreview {
+        width: 200px;
+        height: 200px;
+        margin: 1rem 0;
+    }
+
+    .image-upload-grid {
+        grid-template-columns: 1fr;  /* Single column for additional images */
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .additional-preview {
+        width: 200px;
+        height: 200px;
+        margin: 0.5rem 0;
+    }
+
+    /* Align file input buttons */
+    .image-upload input[type="file"],
+    .image-upload-grid input[type="file"] {
+        width: 200px;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Additional images container */
+    .additional-images {
+        width: 100%;
+    }
+
+    /* Each image upload container in the grid */
+    .image-upload-grid .image-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Phone-specific styles */
+@media screen and (max-width: 480px) {
+    /* Simplified contact card */
+    .contact-card {
+        padding: 0.8rem;
+        gap: 0.5rem;
+        flex-direction: row;  /* Change back to row */
+        align-items: center;  /* Center items vertically */
+        justify-content: space-between;  /* Space between contact info and delete */
+    }
+
+    /* Contact info layout */
+    .contact-info {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex: 1;  /* Take up available space */
+        min-width: 0;  /* Allow text to truncate */
+    }
+
+    /* Hide non-essential info */
+    .contact-title,
+    .contact-email {
+        display: none;
+    }
+
+    /* Make profile image smaller */
+    .profile-image {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;  /* Prevent image from shrinking */
+    }
+
+    /* Style the name section */
+    .contact-details {
+        min-width: 0;  /* Allow text to truncate */
+    }
+
+    .contact-details h2 {
+        font-size: 0.9rem;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Position delete button */
+    .delete-btn {
+        padding: 0.3rem;
+        margin-left: 0.5rem;  /* Space between name and icon */
+        flex-shrink: 0;  /* Prevent icon from shrinking */
+        font-size: 0;  /* Hide text */
+    }
+
+    .delete-btn .material-icons {
+        font-size: 18px;
+    }
+
+    .profile-image.no-image .material-icons {
+        font-size: 24px;  /* Smaller icon on mobile */
+    }
+}
+
+.profile-image.no-image {
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image.no-image .material-icons {
+    font-size: 32px;
+    color: #adb5bd;
+}
+
+@media screen and (max-width: 480px) {
+    .profile-image.no-image .material-icons {
+        font-size: 24px;  /* Smaller icon on mobile */
+    }
+}
+
+/* Search styles */
+.search-container {
+    margin: 1rem 0;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    max-width: 600px;
+}
+
+.search-box .material-icons {
+    color: #666;
+    margin-right: 0.5rem;
+}
+
+#searchInput {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+/* Style for highlighting search matches */
+.search-highlight {
+    background-color: #fff3cd;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+@media screen and (max-width: 768px) {
+    .search-container {
+        margin: 0.5rem 0;
+    }
+    
+    .search-box {
+        margin: 0 1rem;
+    }
+}
+
+.additional-images {
+    margin: 1rem 0;
+}
+
+.additional-images label {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.image-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 600px;
+}
+
+.additional-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    background: #ddd;
+    margin: 10px 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.additional-preview:empty::after {
+    content: 'No image';
+    color: #666;
+}
+
+.additional-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .image-upload-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.image-input-wrapper {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.change-image-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 1px 6px;
+    background-color: #f0f0f0;
+    border: 1px solid #999;
+    border-radius: 4px;
+    color: #000;
+    cursor: pointer;
+    font: -apple-system-button;
+    font-size: 13px;
+    height: 24px;
+}
+
+.change-image-btn:hover {
+    background-color: #e3e3e3;
+}
+
+.change-image-btn .material-icons {
+    font-size: 16px;
+}
+
+.file-name {
+    margin-left: 8px;
+    color: #666;
+    font-size: 13px;
+}
+
+/* Hide the default file input but keep it functional */
+.image-input-wrapper input[type="file"] {
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+}
+
+/* Add these styles for the image preview modal */
+.image-preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    cursor: pointer;
+}
+
+.image-preview-modal img {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Make preview images clickable */
+.additional-preview img, #imagePreview img {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.additional-preview img:hover, #imagePreview img:hover {
+    opacity: 0.9;
+}
+
+.format-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.format-buttons button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.format-buttons button:hover {
+    background: #f8f9fa;
+    border-color: #0d6efd;
+}
+
+.format-buttons .material-icons {
+    font-size: 2rem;
+    color: #0d6efd;
+}
+
+.format-buttons small {
+    color: #6c757d;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.modal .cancel-btn {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f8f9fa;
+    cursor: pointer;
+}
+
+.modal .cancel-btn:hover {
+    background: #e9ecef;
+}
+
+.form-section {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.form-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+/* Date input styling */
+input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.social-input {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0 8px;
+}
+
+.social-input input {
+    border: none;
+    padding: 8px;
+    width: 100%;
+}
+
+.social-input input:focus {
+    outline: none;
+}
+
+.social-input .material-icons {
+    color: #6c757d;
+    font-size: 20px;
+}
+
+.social-input:focus-within {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.preferences-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.toggle-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.toggle-text {
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: white;
+}
+
+select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    outline: none;
+}
+
+.tags-input {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 4px;
+    background: white;
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 4px 0;
+}
+
+.tag {
+    background: #e9ecef;
+    border-radius: 16px;
+    padding: 2px 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tag .remove-tag {
+    cursor: pointer;
+    color: #6c757d;
+    font-size: 18px;
+}
+
+.tag .remove-tag:hover {
+    color: #dc3545;
+}
+
+#tagInput {
+    border: none;
+    outline: none;
+    padding: 4px;
+    width: 100%;
+}
+
+.custom-fields {
+    width: 100%;
+}
+
+.add-custom-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #e9ecef;
+    border: 1px dashed #6c757d;
+    border-radius: 4px;
+    color: #2c3e50;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.add-custom-field:hover {
+    background: #dee2e6;
+}
+
+.custom-field-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.custom-field-item input {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.remove-custom-field {
+    cursor: pointer;
+    color: #6c757d;
+}
+
+.remove-custom-field:hover {
+    color: #dc3545;
+}
+
+/* Mobile responsiveness for contact form */
+@media screen and (max-width: 768px) {
+    /* Modal adjustments */
+    .modal-content {
+        width: 95%;
+        max-width: 100%;
+        max-height: 90vh;
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    /* Form grid adjustments */
+    .form-grid {
+        grid-template-columns: 1fr;  /* Single column layout */
+        gap: 0.8rem;
+    }
+
+    /* Name row adjustments */
+    .name-row {
+        grid-template-columns: 1fr;  /* Stack name fields vertically */
+        gap: 0.8rem;
+    }
+
+    /* Image upload adjustments */
+    .image-upload {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #imagePreview {
+        width: 200px;
+        height: 200px;
+        margin: 1rem 0;
+    }
+
+    .image-upload-grid {
+        grid-template-columns: 1fr;  /* Single column for additional images */
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .additional-preview {
+        width: 200px;
+        height: 200px;
+        margin: 0.5rem 0;
+    }
+
+    /* Form section adjustments */
+    .form-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Video and YouTube containers */
+    .video-wrapper,
+    .youtube-wrapper {
+        max-width: 100%;
+    }
+
+    .youtube-container {
+        width: 100%;
+        height: 200px;
+    }
+
+    /* Form buttons */
+    .form-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .form-buttons button {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    /* Input fields */
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 0.8rem;
+        font-size: 16px;  /* Prevent iOS zoom on focus */
+    }
+
+    /* Social media inputs */
+    .social-input {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    /* Tags input */
+    .tags-input {
+        padding: 0.5rem;
+    }
+
+    .tag {
+        margin: 0.2rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    /* Custom fields */
+    .custom-field-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    /* Form sections */
+    .form-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    /* Preferences toggles */
+    .preferences-toggles {
+        gap: 0.8rem;
+    }
+
+    .toggle-label {
+        font-size: 0.9rem;
+    }
+
+    /* Attachments */
+    .attachments-wrapper {
+        max-width: 100%;
+    }
+
+    .attachment-item {
+        flex-wrap: wrap;
+        padding: 0.5rem;
+    }
+
+    /* Align file input buttons */
+    .image-upload input[type="file"],
+    .image-upload-grid input[type="file"] {
+        width: 200px;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Additional images container */
+    .additional-images {
+        width: 100%;
+    }
+
+    /* Each image upload container in the grid */
+    .image-upload-grid .image-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Additional styles for very small screens */
+@media screen and (max-width: 480px) {
+    .modal-content {
+        padding: 0.8rem;
+    }
+
+    #imagePreview,
+    .additional-preview {
+        width: 150px;
+        height: 150px;
+    }
+
+    .form-section {
+        padding: 0.8rem;
+    }
+
+    /* Increase touch targets */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        min-height: 44px;  /* Minimum touch target size */
+    }
+
+    .change-image-btn,
+    .remove-custom-field,
+    .remove-tag {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Fix iOS input issues */
+    input[type="date"],
+    input[type="time"] {
+        min-height: 44px;
+        -webkit-appearance: none;
+    }
+} 
